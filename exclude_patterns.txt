@@ -1,0 +1,11 @@
+^https?\:\/\/tequila\.epfl\.ch.*$
+^https?\:\/\/rdp\.epfl\.ch\/login.*$
+^https?\:\/\/rdp\.epfl\.ch\/\d*\/attachment\/.*$
+^https?:\/\/.*\.epfl\.ch\/cms\/engineName\/tequila_login\/site\/.*\/pid\/\d*$
+^https?\:\/\/mediatheque\.epfl\.ch\/modules\.php\?.*$
+^https?\:\/\/actualites\.epfl\.ch\/modules\.php\?.*$
+^https?\:\/\/cadiwww.epfl.ch/listes/viewlist\?.*$
+^https?\:\/\/cadiwww.epfl.ch/listes\?sciper\=\d*$
+^mailto\:.*$
+^https?\:\/\/suri-past.epfl.ch.*\?do\=login\&sectok\=.*$
+^https?\:\/\/infoscience.epfl.ch\/youraccount\/login\?.*$
