@@ -49,7 +49,7 @@ def get_external_links(base_url: str, page_content: str) -> list:
             absolute_destination = normalize_url(urljoin(base_url, link.get('href')))
             if absolute_destination != base_url \
                     and absolute_destination not in return_value \
-                    and '.epfl.ch' in str.lower(absolute_destination):
+                    and re.match('https?\:\/\/\w*\.epfl\.ch\/.*', absolute_destination, re.IGNORECASE):
                 return_value.append(absolute_destination)
 
     iframes = soup.find_all(name='iframe', attrs={'src': True})
