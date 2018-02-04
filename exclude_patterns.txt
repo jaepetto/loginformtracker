@@ -9,3 +9,4 @@
 ^mailto\:.*$
 ^https?\:\/\/suri-past.epfl.ch.*\?do\=login\&sectok\=.*$
 ^https?\:\/\/infoscience.epfl.ch\/youraccount\/login\?.*$
+^https?\:\/\/moodle.epfl.ch\/.*$
