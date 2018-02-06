@@ -103,13 +103,15 @@ def dump_data(data: object, name: str) -> None:
     dump_file = str('{}.pickle').format(name)
     dump_backup_file = str('{}.pickle.bak').format(name)
 
-    shutil.copy(dump_file, dump_backup_file)
+    if os.path.exists(dump_file):
+        shutil.copy(dump_file, dump_backup_file)
 
     with open(str('{}.pickle').format(name), 'wb') as f:
         # Pickle the 'data' dictionary using the highest protocol available.
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
-    os.remove(dump_backup_file)
+    if os.path.exists(dump_backup_file):
+        os.remove(dump_backup_file)
 
 
 def load_data(name: str) -> object:
