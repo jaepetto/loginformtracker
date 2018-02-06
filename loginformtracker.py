@@ -114,13 +114,17 @@ def dump_data(data: object, name: str) -> None:
 
 def load_data(name: str) -> object:
     file_name = str('{}.pickle').format(name)
-    if os.path.isfile(file_name):
-        with open(file_name, 'rb') as f:
-            # The protocol version used is detected automatically, so we do not
-            # have to specify it.
-            data = pickle.load(f)
-            return data
-    else:
+    try:
+        if os.path.isfile(file_name):
+            with open(file_name, 'rb') as f:
+                # The protocol version used is detected automatically, so we do not
+                # have to specify it.
+                data = pickle.load(f)
+                return data
+        else:
+            return []
+    except EOFError:
+        # TODO: add logging and more logic to handle failures to load serialized data
         return []
 
 
