@@ -38,6 +38,15 @@ def check_password_input_box(page_content: str) -> bool:
     return len(password_inputs) > 0
 
 
+def is_in_epfl_domain(url: str)->bool:
+    return_value = False
+    if re.match('https?\:\/\/\w*\.epfl\.ch\/.*', url, re.IGNORECASE):
+        return_value = True
+
+    # TODO: add logic to test ip addresses
+    return return_value
+
+
 def get_external_links(base_url: str, page_content: str) -> list:
     return_value = []
 
@@ -49,7 +58,7 @@ def get_external_links(base_url: str, page_content: str) -> list:
             absolute_destination = normalize_url(urljoin(base_url, link.get('href')))
             if absolute_destination != base_url \
                     and absolute_destination not in return_value \
-                    and re.match('https?\:\/\/\w*\.epfl\.ch\/.*', absolute_destination, re.IGNORECASE):
+                    and is_in_epfl_domain(absolute_destination):
                 return_value.append(absolute_destination)
 
     iframes = soup.find_all(name='iframe', attrs={'src': True})
