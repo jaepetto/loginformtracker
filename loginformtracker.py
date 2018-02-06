@@ -3,6 +3,7 @@ import re
 import shutil
 
 import requests
+import time
 import urltools as urltools
 from bs4 import BeautifulSoup
 
@@ -76,18 +77,23 @@ def get_external_links(base_url: str, page_content: str) -> list:
 def check_url(url_to_check: str, content_type_patterns_to_include: list) -> CheckedUrl:
     return_value = CheckedUrl(url=url_to_check, flagged_as_unsafe=False, messages=[], external_links=[])
     try:
+        t1 = time.time()
         req = requests.head(url=url_to_check, allow_redirects=True, timeout=2, verify=False)
+        t2 = time.time()
+        return_value.head_time = t2-t1
+
         should_be_retrieved = False
         for content_type_pattern_to_include in content_type_patterns_to_include:
             if re.match(content_type_pattern_to_include, req.headers['content-type'], re.IGNORECASE):
                 should_be_retrieved = True
                 return_value.messages.append("INFO: the content-type is matching one the content types to be retrieved")
 
-        if not should_be_retrieved:
-            print("toto")
-
         if should_be_retrieved:
+            t1 = time.time()
             req = requests.get(url=url_to_check, allow_redirects=True, timeout=2, verify=False)
+            t2 = time.time()
+            return_value.time = t2-t1
+            return_value.http_status = req.status_code
             return_value.landing_url = req.url
             return_value.flagged_as_unsafe = check_password_input_box(req.content)
             return_value.external_links = get_external_links(base_url=return_value.landing_url, page_content=req.content)
