@@ -1,5 +1,6 @@
 import pprint
 import re
+import shutil
 
 import requests
 import urltools as urltools
@@ -99,9 +100,16 @@ def check_url(url_to_check: str, content_type_patterns_to_include: list) -> Chec
 
 
 def dump_data(data: object, name: str) -> None:
+    dump_file = str('{}.pickle').format(name)
+    dump_backup_file = str('{}.pickle.bak').format(name)
+
+    shutil.copy(dump_file, dump_backup_file)
+
     with open(str('{}.pickle').format(name), 'wb') as f:
         # Pickle the 'data' dictionary using the highest protocol available.
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
+    os.remove(dump_backup_file)
 
 
 def load_data(name: str) -> object:
