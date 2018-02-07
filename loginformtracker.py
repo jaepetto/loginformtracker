@@ -24,6 +24,7 @@ def normalize_url(url: str) -> str:
 
     # Remove the jsessionid from the path (unless you want to end up in an infinite loop...)
     new_path = re.sub(r';jsessionid=\w{32}', '', temp_url.path)
+    new_path = re.sub(r'&sectok=\w{32}', '', new_path)
 
     new_url = urltools.URL(scheme=temp_url.scheme, username=temp_url.username, password=temp_url.password,
                            subdomain=temp_url.subdomain,
